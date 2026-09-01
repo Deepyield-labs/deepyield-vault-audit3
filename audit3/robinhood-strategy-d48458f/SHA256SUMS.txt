@@ -1,2 +1,2 @@
-08cc1b696197dc1f4ffbf0280202c7b7cbd30b4d72b6fa380f913bf5e857d105  ./EXTERNAL_AUDIT_BRIEF.md
+dcc054c5f6a8f08457456fbf0210e64ea515b2bd03b4b50fcd26254d7e7df57b  ./EXTERNAL_AUDIT_BRIEF.md
 811c9e9eeb437320bb7b7716c6eea6a4542f0858f0e0ea8cd3f8bec0ffa30e14  ./flat/RobinhoodTreasuryStrategy.audit3.flat.sol
