@@ -50,12 +50,13 @@ perform unpaid component or graph-wide integration work.
 Author QA on the exact source commit:
 
 - final adversarial matrix: 221 PASS / 0 FAIL / 0 SKIP;
+- Robinhood fork: 57/57 main graph plus 1/1 focused sub-threshold market-close
+  witness, **58 PASS / 0 FAIL / 0 SKIP**, chain 4663 at block 52,322,904;
 - additional core matrix before the final strict-NAV composition refinement:
   58 PASS / 0 FAIL / 0 SKIP;
 - runtime: `RobinhoodTreasuryVault` 22,454 B (2,122 B EIP-170 margin);
 - method identifiers, storage slots and linked-library set unchanged;
 - scoped format, high/medium lint and diff-check: PASS.
 
-The public Robinhood RPC did not complete a frozen-block Foundry state read, so
-no fork PASS is claimed. Independent re-audit and archive-fork rehearsal remain
-required. Production and deployed state were not changed.
+Fork reproduction details are in `FORK_EVIDENCE.md`. Independent re-audit is
+still required. Production and deployed state were not changed.
