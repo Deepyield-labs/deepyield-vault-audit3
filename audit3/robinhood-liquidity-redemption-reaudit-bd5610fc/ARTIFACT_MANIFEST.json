@@ -1,0 +1,81 @@
+{
+  "schema": "deepyield-audit-artifact-manifest-v1",
+  "date": "2026-09-03",
+  "chainId": 4663,
+  "status": "pre-deployment",
+  "baseline": "5a13bf7318e0a2e3096ce13e9131299654ed0ec1",
+  "packageCommitmentSha256": "bd5610fc14c3edb8c15e0f622795a98c3c730e181d07c782fd8513443e14f477",
+  "compiler": {
+    "version": "0.8.24",
+    "evmVersion": "cancun",
+    "viaIR": true,
+    "optimizer": true,
+    "optimizerRuns": 200,
+    "foundryBuildInfoId": "3f43d577d77ae954"
+  },
+  "fork": {
+    "blockNumber": 52303713,
+    "blockHash": "0xd5d16b8d4645aebacdbb7e8333b16b0885724da0345ef227db872064a6da3b3b",
+    "passed": 57,
+    "failed": 0,
+    "skipped": 0
+  },
+  "historicalQa": {
+    "passed": 796,
+    "failed": 0,
+    "skipped": 0
+  },
+  "runtimeBytes": {
+    "RobinhoodTreasuryVault": 21384,
+    "RobinhoodTreasuryStrategy": 20279,
+    "BoundedUniswapV3Venue": 22376,
+    "RobinhoodPriceGuard": 11207,
+    "BoundedMorphoV2Adapter": 7006,
+    "FixedFeeSink": 6362,
+    "VaultBDepositLib": 19489,
+    "VaultBRedemptionLib": 14222,
+    "RobinhoodStrategyLib": 22095,
+    "RobinhoodSettlementLib": 13496,
+    "RobinhoodVenueLib": 21016
+  },
+  "runtimeMarginBytes": {
+    "RobinhoodTreasuryVault": 3192,
+    "RobinhoodTreasuryStrategy": 4297,
+    "BoundedUniswapV3Venue": 2200,
+    "RobinhoodPriceGuard": 13369,
+    "BoundedMorphoV2Adapter": 17570,
+    "FixedFeeSink": 18214,
+    "VaultBDepositLib": 5087,
+    "VaultBRedemptionLib": 10354,
+    "RobinhoodStrategyLib": 2481,
+    "RobinhoodSettlementLib": 11080,
+    "RobinhoodVenueLib": 3560
+  },
+  "runtimeLinks": {
+    "RobinhoodTreasuryVault": ["VaultBDepositLib", "VaultBRedemptionLib"],
+    "VaultBRedemptionLib": ["VaultBDepositLib"],
+    "RobinhoodTreasuryStrategy": ["RobinhoodSettlementLib", "RobinhoodStrategyLib"],
+    "RobinhoodSettlementLib": ["RobinhoodStrategyLib"],
+    "BoundedUniswapV3Venue": ["RobinhoodVenueLib"]
+  },
+  "storageCompatibility": {
+    "RobinhoodTreasuryVault": "legacy slots 0-33 unchanged; additions occupy slots 34-38",
+    "RobinhoodTreasuryStrategy": "legacy slots 0-19 unchanged; additions occupy slots 20-30",
+    "BoundedUniswapV3Venue": "legacy slots 0-8 unchanged; dustRecipient is immutable"
+  },
+  "abiCompatibility": {
+    "removedLegacySelectors": 0,
+    "changedLegacySelectors": 0,
+    "selectorCollisions": 0
+  },
+  "flatEquivalence": {
+    "contractsAndLibrariesChecked": 11,
+    "abiMismatches": 0,
+    "runtimeMismatchesExcludingMetadataAndNormalizedLinks": 0
+  },
+  "flats": {
+    "flat/RobinhoodTreasuryVault.reaudit.flat.sol": "38cfa4886db1d5810af26e1f3f6b9532f14de2c6c529225f3e9b47fc4ac20e49",
+    "flat/RobinhoodTreasuryStrategyFee.reaudit.flat.sol": "a93745d76fb88d912475b6215a2b5c37b63cdc42e6e67779640f06f45ae27ad2",
+    "flat/RobinhoodVenueOracle.reaudit.flat.sol": "19136ab491c436ffa2b3aba0b6088eac8933dc8f040059338b4c58416dc44576"
+  }
+}
