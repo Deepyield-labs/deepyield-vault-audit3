@@ -1,0 +1,53 @@
+{
+  "package": "robinhood-execution-split-27433af9",
+  "date": "2026-09-03",
+  "chainId": 4663,
+  "status": "pre-deployment-independent-reaudit",
+  "compiler": {
+    "version": "0.8.24+commit.e11b9ed9",
+    "optimizer": true,
+    "optimizerRuns": 200,
+    "viaIR": true,
+    "evmVersion": "cancun"
+  },
+  "files": {
+    "flat/RobinhoodStrategyCore.reaudit.flat.sol": {
+      "sha256": "9a9224f31f6a731b2a77e20d26f4169d5ea5a1ab6c1b66a4303dca604a51e873",
+      "bytes": 270260,
+      "lines": 6795,
+      "scope": [
+        "RobinhoodTreasuryStrategy",
+        "RobinhoodStrategyLib",
+        "RobinhoodSettlementLib",
+        "FixedFeeSink"
+      ]
+    },
+    "flat/RobinhoodVenueOracle.reaudit.flat.sol": {
+      "sha256": "f8f73608a7a932e5859de1a97367aaf7a7e7ca6e8250f58a5bace9e41098db36",
+      "bytes": 141339,
+      "lines": 3250,
+      "scope": [
+        "BoundedUniswapV3Venue",
+        "RobinhoodVenueLib",
+        "RobinhoodPriceGuard"
+      ]
+    },
+    "flat/RobinhoodMorphoAdapter.reaudit.flat.sol": {
+      "sha256": "dae6dfa113436cd3ee14d549ccb8baf10fc6adf6c9456c28ba72a6ec8c5b861d",
+      "bytes": 47834,
+      "lines": 1150,
+      "scope": ["BoundedMorphoV2Adapter"]
+    }
+  },
+  "productionSourceSha256": {
+    "RobinhoodTreasuryStrategy.sol": "903d3d8f8c86b34ad01365094519ed0de9de8191bc48bd80c1152ce12569105f",
+    "RobinhoodStrategyLib.sol": "813ef4ecfc9e63bd65c2d72f700e68ad20e9c37bb40b29173a1a4058f4dbfa6d",
+    "RobinhoodSettlementLib.sol": "d0f43811845a73d60c7066540203783a1fe154720e31d186a966d195ddbb940b"
+  },
+  "equivalence": {
+    "abi": "PASS for all eight deployable/linked units",
+    "deployedRuntimeWithoutMetadataAndWithLinkPlaceholdersNormalized": "PASS for all eight deployable/linked units",
+    "standaloneCompilation": "PASS"
+  },
+  "supersedesDeclinedFlatSha256": "a87acc91477feeae39a8b41a9457255dcc8f1c84143e9f52150760b7ebd5c7cc"
+}
