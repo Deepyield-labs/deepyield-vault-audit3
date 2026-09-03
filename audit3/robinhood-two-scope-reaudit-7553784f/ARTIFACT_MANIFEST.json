@@ -1,0 +1,46 @@
+{
+  "package": "robinhood-two-scope-reaudit-7553784f",
+  "status": "pre-deployment-third-audit-pending",
+  "baselineCommit": "5a13bf7318e0a2e3096ce13e9131299654ed0ec1",
+  "sourceSetCommitmentSha256": "7553784f164b1ae8220b2875795c8a49f6b2c2eaed4201370a03e26299090d68",
+  "flatSetCommitmentSha256": "0e55b0dec17611552a0e566f6024094dfcbd2ac376837ca8116bb44624b373fb",
+  "compiler": {
+    "version": "0.8.24",
+    "evmVersion": "cancun",
+    "viaIR": true,
+    "optimizer": true,
+    "optimizerRuns": 200
+  },
+  "qa": {
+    "focused": { "passed": 1, "failed": 0, "skipped": 0 },
+    "historicalAudit3": { "passed": 461, "failed": 0, "skipped": 0 },
+    "completeRobinhood": { "passed": 804, "failed": 0, "skipped": 0 },
+    "canonicalFork": { "passed": 57, "failed": 0, "skipped": 0 },
+    "deploymentDryRun": { "passed": 10, "failed": 0, "skipped": 0 }
+  },
+  "runtimeMargins": {
+    "RobinhoodTreasuryVault": 2072,
+    "RobinhoodTreasuryStrategy": 4297,
+    "BoundedUniswapV3Venue": 2537,
+    "RobinhoodPriceGuard": 13316,
+    "BoundedMorphoV2Adapter": 17570,
+    "FixedFeeSink": 18214,
+    "VaultBDepositLib": 3791,
+    "VaultBRedemptionLib": 9084,
+    "RobinhoodStrategyLib": 2394,
+    "RobinhoodSettlementLib": 11080,
+    "RobinhoodVenueLib": 3630
+  },
+  "linkGraph": {
+    "RobinhoodTreasuryVault": ["VaultBDepositLib", "VaultBRedemptionLib"],
+    "VaultBRedemptionLib": ["VaultBDepositLib"],
+    "RobinhoodTreasuryStrategy": ["RobinhoodSettlementLib", "RobinhoodStrategyLib"],
+    "RobinhoodSettlementLib": ["RobinhoodStrategyLib"],
+    "BoundedUniswapV3Venue": ["RobinhoodVenueLib"]
+  },
+  "files": {
+    "flat/RobinhoodVaultRedemption.reaudit.flat.sol": "b119dd9f044e545a834b6a26d690acb312ce74ec0bb871dae90f68f5e9c1aa86",
+    "flat/RobinhoodStrategyExecution.reaudit.flat.sol": "a87acc91477feeae39a8b41a9457255dcc8f1c84143e9f52150760b7ebd5c7cc"
+  }
+}
+
