@@ -1,0 +1,42 @@
+{
+ "package": "robinhood-strategy-contract-fdda3319",
+ "date": "2026-09-04",
+ "sourceCommit": "ccd3b2aacc457d0e4ad42e210895a440f5c9e592",
+ "commitment": "fdda33196305a32dc70770118a844c0bf8ad0dff0740ab5804fc2150f9008086",
+ "compiler": {
+  "version": "0.8.24+commit.e11b9ed9",
+  "optimizer": true,
+  "optimizerRuns": 200,
+  "viaIR": true,
+  "evmVersion": "cancun"
+ },
+ "files": {
+  "flat/RobinhoodTreasuryStrategyContract.reaudit.flat.sol": {
+   "sha256": "b6df6603973d017791aeb9606736019770d468237c8d3072a4d55e8c30faf355",
+   "bytes": 294426,
+   "lines": 7256,
+   "units": [
+    "RobinhoodTreasuryStrategy",
+    "RobinhoodStrategyLib",
+    "RobinhoodSettlementLib"
+   ]
+  }
+ },
+ "runtimeSizes": {
+  "RobinhoodTreasuryStrategy": {
+   "runtimeBytes": 21886,
+   "marginBytes": 2690
+  }
+ },
+ "equivalence": {
+  "abi": "PASS",
+  "deployedRuntimeWithoutMetadataAndWithLinkPlaceholdersNormalized": "PASS",
+  "standaloneCompilation": "PASS"
+ },
+ "testMatrix": {
+  "suites": 14,
+  "passed": 832,
+  "failed": 0,
+  "skipped": 0
+ }
+}
