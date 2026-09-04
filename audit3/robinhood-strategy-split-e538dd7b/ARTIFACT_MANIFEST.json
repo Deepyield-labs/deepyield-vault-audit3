@@ -1,0 +1,41 @@
+{
+ "package": "robinhood-strategy-split-e538dd7b",
+ "date": "2026-09-04",
+ "sourceCommit": "e102b441768d21d16c65e8ba473770e4454c68d5",
+ "commitment": "e538dd7b4f482f39576e267796c215da572348b745743c112d144a2e4074f9b0",
+ "compiler": {
+  "version": "0.8.24+commit.e11b9ed9",
+  "optimizer": true,
+  "optimizerRuns": 200,
+  "viaIR": true,
+  "evmVersion": "cancun"
+ },
+ "files": {
+  "flat/RobinhoodStrategyLibraries.reaudit.flat.sol": {
+   "sha256": "451b2925853af3994c818938cb148e57a6c8516ac3e09f97a20df6e0180fae2d",
+   "bytes": 259290,
+   "lines": 6487,
+   "units": [
+    "RobinhoodStrategyLib",
+    "RobinhoodSettlementLib",
+    "FixedFeeSink"
+   ]
+  },
+  "flat/RobinhoodTreasuryStrategyContract.reaudit.flat.sol": {
+   "sha256": "7d9dd5f5a4b42bbb93b7dc85bafea1a7ccf984141de01d461f3142eead19b890",
+   "bytes": 294198,
+   "lines": 7251,
+   "units": [
+    "RobinhoodTreasuryStrategy",
+    "RobinhoodStrategyLib",
+    "RobinhoodSettlementLib"
+   ]
+  }
+ },
+ "equivalence": {
+  "abi": "PASS",
+  "deployedRuntimeWithoutMetadataAndWithLinkPlaceholdersNormalized": "PASS",
+  "standaloneCompilation": "PASS"
+ },
+ "relatedPackage": "robinhood-five-scope-reaudit-119013d1"
+}
