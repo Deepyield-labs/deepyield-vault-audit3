@@ -1,0 +1,1313 @@
+// SPDX-License-Identifier: MIT
+pragma solidity =0.8.24 >=0.4.16 >=0.6.2 ^0.8.20;
+
+// lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (utils/introspection/IERC165.sol)
+
+/**
+ * @dev Interface of the ERC-165 standard, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-165[ERC].
+ *
+ * Implementers can declare support of contract interfaces, which can then be
+ * queried by others ({ERC165Checker}).
+ *
+ * For an implementation, see {ERC165}.
+ */
+interface IERC165 {
+    /**
+     * @dev Returns true if this contract implements the interface defined by
+     * `interfaceId`. See the corresponding
+     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]
+     * to learn more about how these ids are created.
+     *
+     * This function call must use less than 30 000 gas.
+     */
+    function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+
+// lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/IERC20.sol)
+
+/**
+ * @dev Interface of the ERC-20 standard as defined in the ERC.
+ */
+interface IERC20 {
+    /**
+     * @dev Emitted when `value` tokens are moved from one account (`from`) to
+     * another (`to`).
+     *
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+    /**
+     * @dev Returns the value of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
+
+    /**
+     * @dev Returns the value of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
+
+    /**
+     * @dev Moves a `value` amount of tokens from the caller's account to `to`.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transfer(address to, uint256 value) external returns (bool);
+
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    /**
+     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the
+     * caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 value) external returns (bool);
+
+    /**
+     * @dev Moves a `value` amount of tokens from `from` to `to` using the
+     * allowance mechanism. `value` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(address from, address to, uint256 value) external returns (bool);
+}
+
+// lib/openzeppelin-contracts/contracts/utils/StorageSlot.sol
+
+// OpenZeppelin Contracts (last updated v5.1.0) (utils/StorageSlot.sol)
+// This file was procedurally generated from scripts/generate/templates/StorageSlot.js.
+
+/**
+ * @dev Library for reading and writing primitive types to specific storage slots.
+ *
+ * Storage slots are often used to avoid storage conflict when dealing with upgradeable contracts.
+ * This library helps with reading and writing to such slots without the need for inline assembly.
+ *
+ * The functions in this library return Slot structs that contain a `value` member that can be used to read or write.
+ *
+ * Example usage to set ERC-1967 implementation slot:
+ * ```solidity
+ * contract ERC1967 {
+ *     // Define the slot. Alternatively, use the SlotDerivation library to derive the slot.
+ *     bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
+ *
+ *     function _getImplementation() internal view returns (address) {
+ *         return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;
+ *     }
+ *
+ *     function _setImplementation(address newImplementation) internal {
+ *         require(newImplementation.code.length > 0);
+ *         StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;
+ *     }
+ * }
+ * ```
+ *
+ * TIP: Consider using this library along with {SlotDerivation}.
+ */
+library StorageSlot {
+    struct AddressSlot {
+        address value;
+    }
+
+    struct BooleanSlot {
+        bool value;
+    }
+
+    struct Bytes32Slot {
+        bytes32 value;
+    }
+
+    struct Uint256Slot {
+        uint256 value;
+    }
+
+    struct Int256Slot {
+        int256 value;
+    }
+
+    struct StringSlot {
+        string value;
+    }
+
+    struct BytesSlot {
+        bytes value;
+    }
+
+    /**
+     * @dev Returns an `AddressSlot` with member `value` located at `slot`.
+     */
+    function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns a `BooleanSlot` with member `value` located at `slot`.
+     */
+    function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.
+     */
+    function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns a `Uint256Slot` with member `value` located at `slot`.
+     */
+    function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns a `Int256Slot` with member `value` located at `slot`.
+     */
+    function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns a `StringSlot` with member `value` located at `slot`.
+     */
+    function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns an `StringSlot` representation of the string storage pointer `store`.
+     */
+    function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := store.slot
+        }
+    }
+
+    /**
+     * @dev Returns a `BytesSlot` with member `value` located at `slot`.
+     */
+    function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := slot
+        }
+    }
+
+    /**
+     * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.
+     */
+    function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {
+        assembly ("memory-safe") {
+            r.slot := store.slot
+        }
+    }
+}
+
+// lib/openzeppelin-contracts/contracts/interfaces/IERC165.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC165.sol)
+
+// lib/openzeppelin-contracts/contracts/interfaces/IERC20.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC20.sol)
+
+// lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/extensions/IERC20Metadata.sol)
+
+/**
+ * @dev Interface for the optional metadata functions from the ERC-20 standard.
+ */
+interface IERC20Metadata is IERC20 {
+    /**
+     * @dev Returns the name of the token.
+     */
+    function name() external view returns (string memory);
+
+    /**
+     * @dev Returns the symbol of the token.
+     */
+    function symbol() external view returns (string memory);
+
+    /**
+     * @dev Returns the decimals places of the token.
+     */
+    function decimals() external view returns (uint8);
+}
+
+// src/robinhood/IRobinhoodProtocols.sol
+
+enum RobinhoodMarket {
+    NONE,
+    ETH,
+    NVDA
+}
+
+interface IRobinhoodAggregatorV3 {
+    function decimals() external view returns (uint8);
+    function description() external view returns (string memory);
+    function latestRoundData()
+        external
+        view
+        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);
+}
+
+interface IRobinhoodStockToken is IERC20 {
+    function oraclePaused() external view returns (bool);
+    function uiMultiplier() external view returns (uint256);
+}
+
+interface IRobinhoodV3Pool {
+    function factory() external view returns (address);
+    function token0() external view returns (address);
+    function token1() external view returns (address);
+    function fee() external view returns (uint24);
+    function tickSpacing() external view returns (int24);
+
+    function slot0()
+        external
+        view
+        returns (
+            uint160 sqrtPriceX96,
+            int24 tick,
+            uint16 observationIndex,
+            uint16 observationCardinality,
+            uint16 observationCardinalityNext,
+            uint8 feeProtocol,
+            bool unlocked
+        );
+
+    function observe(uint32[] calldata secondsAgos)
+        external
+        view
+        returns (int56[] memory tickCumulatives, uint160[] memory secondsPerLiquidityCumulativeX128s);
+
+    function increaseObservationCardinalityNext(uint16 observationCardinalityNext) external;
+
+    function feeGrowthGlobal0X128() external view returns (uint256);
+    function feeGrowthGlobal1X128() external view returns (uint256);
+
+    function ticks(int24 tick)
+        external
+        view
+        returns (
+            uint128 liquidityGross,
+            int128 liquidityNet,
+            uint256 feeGrowthOutside0X128,
+            uint256 feeGrowthOutside1X128,
+            int56 tickCumulativeOutside,
+            uint160 secondsPerLiquidityOutsideX128,
+            uint32 secondsOutside,
+            bool initialized
+        );
+}
+
+interface IRobinhoodSwapRouter {
+    struct ExactInputSingleParams {
+        address tokenIn;
+        address tokenOut;
+        uint24 fee;
+        address recipient;
+        uint256 amountIn;
+        uint256 amountOutMinimum;
+        uint160 sqrtPriceLimitX96;
+    }
+
+    function factory() external view returns (address);
+    function exactInputSingle(ExactInputSingleParams calldata params) external payable returns (uint256 amountOut);
+}
+
+interface IRobinhoodPositionManager {
+    struct MintParams {
+        address token0;
+        address token1;
+        uint24 fee;
+        int24 tickLower;
+        int24 tickUpper;
+        uint256 amount0Desired;
+        uint256 amount1Desired;
+        uint256 amount0Min;
+        uint256 amount1Min;
+        address recipient;
+        uint256 deadline;
+    }
+
+    struct DecreaseLiquidityParams {
+        uint256 tokenId;
+        uint128 liquidity;
+        uint256 amount0Min;
+        uint256 amount1Min;
+        uint256 deadline;
+    }
+
+    struct CollectParams {
+        uint256 tokenId;
+        address recipient;
+        uint128 amount0Max;
+        uint128 amount1Max;
+    }
+
+    function factory() external view returns (address);
+    function balanceOf(address owner) external view returns (uint256);
+    function ownerOf(uint256 tokenId) external view returns (address);
+
+    function positions(uint256 tokenId)
+        external
+        view
+        returns (
+            uint96 nonce,
+            address operator,
+            address token0,
+            address token1,
+            uint24 fee,
+            int24 tickLower,
+            int24 tickUpper,
+            uint128 liquidity,
+            uint256 feeGrowthInside0LastX128,
+            uint256 feeGrowthInside1LastX128,
+            uint128 tokensOwed0,
+            uint128 tokensOwed1
+        );
+
+    function mint(MintParams calldata params)
+        external
+        payable
+        returns (uint256 tokenId, uint128 liquidity, uint256 amount0, uint256 amount1);
+
+    function decreaseLiquidity(DecreaseLiquidityParams calldata params)
+        external
+        payable
+        returns (uint256 amount0, uint256 amount1);
+
+    function collect(CollectParams calldata params) external payable returns (uint256 amount0, uint256 amount1);
+
+    function burn(uint256 tokenId) external payable;
+}
+
+interface IRobinhoodStrategyBinding {
+    function morphoAdapter() external view returns (address);
+    function venue() external view returns (address);
+}
+
+interface IRobinhoodMorphoVault is IERC20 {
+    function asset() external view returns (address);
+    function decimals() external view returns (uint8);
+    function name() external view returns (string memory);
+    function symbol() external view returns (string memory);
+    function totalAssets() external view returns (uint256);
+    function totalSupply() external view returns (uint256);
+    function previewDeposit(uint256 assets) external view returns (uint256 shares);
+    function previewRedeem(uint256 shares) external view returns (uint256 assets);
+    function redeem(uint256 shares, address receiver, address owner) external returns (uint256 assets);
+}
+
+interface IRobinhoodGeneralAdapter1 {
+    function BUNDLER3() external view returns (address);
+    function MORPHO() external view returns (address);
+    function WRAPPED_NATIVE() external view returns (address);
+    function erc20TransferFrom(address token, address receiver, uint256 amount) external;
+    function erc4626Deposit(address vault, uint256 assets, uint256 maxSharePriceE27, address receiver) external;
+}
+
+interface IRobinhoodBundler3 {
+    struct Call {
+        address to;
+        bytes data;
+        uint256 value;
+        bool skipRevert;
+        bytes32 callbackHash;
+    }
+
+    function multicall(Call[] calldata bundle) external payable;
+}
+
+// lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol
+
+// OpenZeppelin Contracts (last updated v5.5.0) (utils/ReentrancyGuard.sol)
+
+/**
+ * @dev Contract module that helps prevent reentrant calls to a function.
+ *
+ * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier
+ * available, which can be applied to functions to make sure there are no nested
+ * (reentrant) calls to them.
+ *
+ * Note that because there is a single `nonReentrant` guard, functions marked as
+ * `nonReentrant` may not call one another. This can be worked around by making
+ * those functions `private`, and then adding `external` `nonReentrant` entry
+ * points to them.
+ *
+ * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,
+ * consider using {ReentrancyGuardTransient} instead.
+ *
+ * TIP: If you would like to learn more about reentrancy and alternative ways
+ * to protect against it, check out our blog post
+ * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].
+ *
+ * IMPORTANT: Deprecated. This storage-based reentrancy guard will be removed and replaced
+ * by the {ReentrancyGuardTransient} variant in v6.0.
+ *
+ * @custom:stateless
+ */
+abstract contract ReentrancyGuard {
+    using StorageSlot for bytes32;
+
+    // keccak256(abi.encode(uint256(keccak256("openzeppelin.storage.ReentrancyGuard")) - 1)) & ~bytes32(uint256(0xff))
+    bytes32 private constant REENTRANCY_GUARD_STORAGE =
+        0x9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00;
+
+    // Booleans are more expensive than uint256 or any type that takes up a full
+    // word because each write operation emits an extra SLOAD to first read the
+    // slot's contents, replace the bits taken up by the boolean, and then write
+    // back. This is the compiler's defense against contract upgrades and
+    // pointer aliasing, and it cannot be disabled.
+
+    // The values being non-zero value makes deployment a bit more expensive,
+    // but in exchange the refund on every call to nonReentrant will be lower in
+    // amount. Since refunds are capped to a percentage of the total
+    // transaction's gas, it is best to keep them low in cases like this one, to
+    // increase the likelihood of the full refund coming into effect.
+    uint256 private constant NOT_ENTERED = 1;
+    uint256 private constant ENTERED = 2;
+
+    /**
+     * @dev Unauthorized reentrant call.
+     */
+    error ReentrancyGuardReentrantCall();
+
+    constructor() {
+        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;
+    }
+
+    /**
+     * @dev Prevents a contract from calling itself, directly or indirectly.
+     * Calling a `nonReentrant` function from another `nonReentrant`
+     * function is not supported. It is possible to prevent this from happening
+     * by making the `nonReentrant` function external, and making it call a
+     * `private` function that does the actual work.
+     */
+    modifier nonReentrant() {
+        _nonReentrantBefore();
+        _;
+        _nonReentrantAfter();
+    }
+
+    /**
+     * @dev A `view` only version of {nonReentrant}. Use to block view functions
+     * from being called, preventing reading from inconsistent contract state.
+     *
+     * CAUTION: This is a "view" modifier and does not change the reentrancy
+     * status. Use it only on view functions. For payable or non-payable functions,
+     * use the standard {nonReentrant} modifier instead.
+     */
+    modifier nonReentrantView() {
+        _nonReentrantBeforeView();
+        _;
+    }
+
+    function _nonReentrantBeforeView() private view {
+        if (_reentrancyGuardEntered()) {
+            revert ReentrancyGuardReentrantCall();
+        }
+    }
+
+    function _nonReentrantBefore() private {
+        // On the first call to nonReentrant, _status will be NOT_ENTERED
+        _nonReentrantBeforeView();
+
+        // Any calls to nonReentrant after this point will fail
+        _reentrancyGuardStorageSlot().getUint256Slot().value = ENTERED;
+    }
+
+    function _nonReentrantAfter() private {
+        // By storing the original value once again, a refund is triggered (see
+        // https://eips.ethereum.org/EIPS/eip-2200)
+        _reentrancyGuardStorageSlot().getUint256Slot().value = NOT_ENTERED;
+    }
+
+    /**
+     * @dev Returns true if the reentrancy guard is currently set to "entered", which indicates there is a
+     * `nonReentrant` function in the call stack.
+     */
+    function _reentrancyGuardEntered() internal view returns (bool) {
+        return _reentrancyGuardStorageSlot().getUint256Slot().value == ENTERED;
+    }
+
+    function _reentrancyGuardStorageSlot() internal pure virtual returns (bytes32) {
+        return REENTRANCY_GUARD_STORAGE;
+    }
+}
+
+// lib/openzeppelin-contracts/contracts/interfaces/IERC1363.sol
+
+// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC1363.sol)
+
+/**
+ * @title IERC1363
+ * @dev Interface of the ERC-1363 standard as defined in the https://eips.ethereum.org/EIPS/eip-1363[ERC-1363].
+ *
+ * Defines an extension interface for ERC-20 tokens that supports executing code on a recipient contract
+ * after `transfer` or `transferFrom`, or code on a spender contract after `approve`, in a single transaction.
+ */
+interface IERC1363 is IERC20, IERC165 {
+    /*
+     * Note: the ERC-165 identifier for this interface is 0xb0202a11.
+     * 0xb0202a11 ===
+     *   bytes4(keccak256('transferAndCall(address,uint256)')) ^
+     *   bytes4(keccak256('transferAndCall(address,uint256,bytes)')) ^
+     *   bytes4(keccak256('transferFromAndCall(address,address,uint256)')) ^
+     *   bytes4(keccak256('transferFromAndCall(address,address,uint256,bytes)')) ^
+     *   bytes4(keccak256('approveAndCall(address,uint256)')) ^
+     *   bytes4(keccak256('approveAndCall(address,uint256,bytes)'))
+     */
+
+    /**
+     * @dev Moves a `value` amount of tokens from the caller's account to `to`
+     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
+     * @param to The address which you want to transfer to.
+     * @param value The amount of tokens to be transferred.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function transferAndCall(address to, uint256 value) external returns (bool);
+
+    /**
+     * @dev Moves a `value` amount of tokens from the caller's account to `to`
+     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
+     * @param to The address which you want to transfer to.
+     * @param value The amount of tokens to be transferred.
+     * @param data Additional data with no specified format, sent in call to `to`.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function transferAndCall(address to, uint256 value, bytes calldata data) external returns (bool);
+
+    /**
+     * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
+     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
+     * @param from The address which you want to send tokens from.
+     * @param to The address which you want to transfer to.
+     * @param value The amount of tokens to be transferred.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function transferFromAndCall(address from, address to, uint256 value) external returns (bool);
+
+    /**
+     * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
+     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
+     * @param from The address which you want to send tokens from.
+     * @param to The address which you want to transfer to.
+     * @param value The amount of tokens to be transferred.
+     * @param data Additional data with no specified format, sent in call to `to`.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function transferFromAndCall(address from, address to, uint256 value, bytes calldata data) external returns (bool);
+
+    /**
+     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the
+     * caller's tokens and then calls {IERC1363Spender-onApprovalReceived} on `spender`.
+     * @param spender The address which will spend the funds.
+     * @param value The amount of tokens to be spent.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function approveAndCall(address spender, uint256 value) external returns (bool);
+
+    /**
+     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the
+     * caller's tokens and then calls {IERC1363Spender-onApprovalReceived} on `spender`.
+     * @param spender The address which will spend the funds.
+     * @param value The amount of tokens to be spent.
+     * @param data Additional data with no specified format, sent in call to `spender`.
+     * @return A boolean value indicating whether the operation succeeded unless throwing.
+     */
+    function approveAndCall(address spender, uint256 value, bytes calldata data) external returns (bool);
+}
+
+// lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol
+
+// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC20/utils/SafeERC20.sol)
+
+/**
+ * @title SafeERC20
+ * @dev Wrappers around ERC-20 operations that throw on failure (when the token
+ * contract returns false). Tokens that return no value (and instead revert or
+ * throw on failure) are also supported, non-reverting calls are assumed to be
+ * successful.
+ * To use this library you can add a `using SafeERC20 for IERC20;` statement to your contract,
+ * which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
+ */
+library SafeERC20 {
+    /**
+     * @dev An operation with an ERC-20 token failed.
+     */
+    error SafeERC20FailedOperation(address token);
+
+    /**
+     * @dev Indicates a failed `decreaseAllowance` request.
+     */
+    error SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease);
+
+    /**
+     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,
+     * non-reverting calls are assumed to be successful.
+     */
+    function safeTransfer(IERC20 token, address to, uint256 value) internal {
+        if (!_safeTransfer(token, to, value, true)) {
+            revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the
+     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.
+     */
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
+        if (!_safeTransferFrom(token, from, to, value, true)) {
+            revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Variant of {safeTransfer} that returns a bool instead of reverting if the operation is not successful.
+     */
+    function trySafeTransfer(IERC20 token, address to, uint256 value) internal returns (bool) {
+        return _safeTransfer(token, to, value, false);
+    }
+
+    /**
+     * @dev Variant of {safeTransferFrom} that returns a bool instead of reverting if the operation is not successful.
+     */
+    function trySafeTransferFrom(IERC20 token, address from, address to, uint256 value) internal returns (bool) {
+        return _safeTransferFrom(token, from, to, value, false);
+    }
+
+    /**
+     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
+     * non-reverting calls are assumed to be successful.
+     *
+     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
+     * smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
+     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract
+     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+     */
+    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+        uint256 oldAllowance = token.allowance(address(this), spender);
+        forceApprove(token, spender, oldAllowance + value);
+    }
+
+    /**
+     * @dev Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no
+     * value, non-reverting calls are assumed to be successful.
+     *
+     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
+     * smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
+     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract
+     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+     */
+    function safeDecreaseAllowance(IERC20 token, address spender, uint256 requestedDecrease) internal {
+        unchecked {
+            uint256 currentAllowance = token.allowance(address(this), spender);
+            if (currentAllowance < requestedDecrease) {
+                revert SafeERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease);
+            }
+            forceApprove(token, spender, currentAllowance - requestedDecrease);
+        }
+    }
+
+    /**
+     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,
+     * non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval
+     * to be set to zero before setting it to a non-zero value, such as USDT.
+     *
+     * NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function
+     * only sets the "standard" allowance. Any temporary allowance will remain active, in addition to the value being
+     * set here.
+     */
+    function forceApprove(IERC20 token, address spender, uint256 value) internal {
+        if (!_safeApprove(token, spender, value, false)) {
+            if (!_safeApprove(token, spender, 0, true)) revert SafeERC20FailedOperation(address(token));
+            if (!_safeApprove(token, spender, value, true)) revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Performs an {ERC1363} transferAndCall, with a fallback to the simple {ERC20} transfer if the target has no
+     * code. This can be used to implement an {ERC721}-like safe transfer that relies on {ERC1363} checks when
+     * targeting contracts.
+     *
+     * Reverts if the returned value is other than `true`.
+     */
+    function transferAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {
+        if (to.code.length == 0) {
+            safeTransfer(token, to, value);
+        } else if (!token.transferAndCall(to, value, data)) {
+            revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Performs an {ERC1363} transferFromAndCall, with a fallback to the simple {ERC20} transferFrom if the target
+     * has no code. This can be used to implement an {ERC721}-like safe transfer that relies on {ERC1363} checks when
+     * targeting contracts.
+     *
+     * Reverts if the returned value is other than `true`.
+     */
+    function transferFromAndCallRelaxed(
+        IERC1363 token,
+        address from,
+        address to,
+        uint256 value,
+        bytes memory data
+    ) internal {
+        if (to.code.length == 0) {
+            safeTransferFrom(token, from, to, value);
+        } else if (!token.transferFromAndCall(from, to, value, data)) {
+            revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Performs an {ERC1363} approveAndCall, with a fallback to the simple {ERC20} approve if the target has no
+     * code. This can be used to implement an {ERC721}-like safe transfer that rely on {ERC1363} checks when
+     * targeting contracts.
+     *
+     * NOTE: When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as {forceApprove}.
+     * Oppositely, when the recipient address (`to`) has code, this function only attempts to call {ERC1363-approveAndCall}
+     * once without retrying, and relies on the returned value to be true.
+     *
+     * Reverts if the returned value is other than `true`.
+     */
+    function approveAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {
+        if (to.code.length == 0) {
+            forceApprove(token, to, value);
+        } else if (!token.approveAndCall(to, value, data)) {
+            revert SafeERC20FailedOperation(address(token));
+        }
+    }
+
+    /**
+     * @dev Imitates a Solidity `token.transfer(to, value)` call, relaxing the requirement on the return value: the
+     * return value is optional (but if data is returned, it must not be false).
+     *
+     * @param token The token targeted by the call.
+     * @param to The recipient of the tokens
+     * @param value The amount of token to transfer
+     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
+     */
+    function _safeTransfer(IERC20 token, address to, uint256 value, bool bubble) private returns (bool success) {
+        bytes4 selector = IERC20.transfer.selector;
+
+        assembly ("memory-safe") {
+            let fmp := mload(0x40)
+            mstore(0x00, selector)
+            mstore(0x04, and(to, shr(96, not(0))))
+            mstore(0x24, value)
+            success := call(gas(), token, 0, 0x00, 0x44, 0x00, 0x20)
+            // if call success and return is true, all is good.
+            // otherwise (not success or return is not true), we need to perform further checks
+            if iszero(and(success, eq(mload(0x00), 1))) {
+                // if the call was a failure and bubble is enabled, bubble the error
+                if and(iszero(success), bubble) {
+                    returndatacopy(fmp, 0x00, returndatasize())
+                    revert(fmp, returndatasize())
+                }
+                // if the return value is not true, then the call is only successful if:
+                // - the token address has code
+                // - the returndata is empty
+                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
+            }
+            mstore(0x40, fmp)
+        }
+    }
+
+    /**
+     * @dev Imitates a Solidity `token.transferFrom(from, to, value)` call, relaxing the requirement on the return
+     * value: the return value is optional (but if data is returned, it must not be false).
+     *
+     * @param token The token targeted by the call.
+     * @param from The sender of the tokens
+     * @param to The recipient of the tokens
+     * @param value The amount of token to transfer
+     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
+     */
+    function _safeTransferFrom(
+        IERC20 token,
+        address from,
+        address to,
+        uint256 value,
+        bool bubble
+    ) private returns (bool success) {
+        bytes4 selector = IERC20.transferFrom.selector;
+
+        assembly ("memory-safe") {
+            let fmp := mload(0x40)
+            mstore(0x00, selector)
+            mstore(0x04, and(from, shr(96, not(0))))
+            mstore(0x24, and(to, shr(96, not(0))))
+            mstore(0x44, value)
+            success := call(gas(), token, 0, 0x00, 0x64, 0x00, 0x20)
+            // if call success and return is true, all is good.
+            // otherwise (not success or return is not true), we need to perform further checks
+            if iszero(and(success, eq(mload(0x00), 1))) {
+                // if the call was a failure and bubble is enabled, bubble the error
+                if and(iszero(success), bubble) {
+                    returndatacopy(fmp, 0x00, returndatasize())
+                    revert(fmp, returndatasize())
+                }
+                // if the return value is not true, then the call is only successful if:
+                // - the token address has code
+                // - the returndata is empty
+                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
+            }
+            mstore(0x40, fmp)
+            mstore(0x60, 0)
+        }
+    }
+
+    /**
+     * @dev Imitates a Solidity `token.approve(spender, value)` call, relaxing the requirement on the return value:
+     * the return value is optional (but if data is returned, it must not be false).
+     *
+     * @param token The token targeted by the call.
+     * @param spender The spender of the tokens
+     * @param value The amount of token to transfer
+     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
+     */
+    function _safeApprove(IERC20 token, address spender, uint256 value, bool bubble) private returns (bool success) {
+        bytes4 selector = IERC20.approve.selector;
+
+        assembly ("memory-safe") {
+            let fmp := mload(0x40)
+            mstore(0x00, selector)
+            mstore(0x04, and(spender, shr(96, not(0))))
+            mstore(0x24, value)
+            success := call(gas(), token, 0, 0x00, 0x44, 0x00, 0x20)
+            // if call success and return is true, all is good.
+            // otherwise (not success or return is not true), we need to perform further checks
+            if iszero(and(success, eq(mload(0x00), 1))) {
+                // if the call was a failure and bubble is enabled, bubble the error
+                if and(iszero(success), bubble) {
+                    returndatacopy(fmp, 0x00, returndatasize())
+                    revert(fmp, returndatasize())
+                }
+                // if the return value is not true, then the call is only successful if:
+                // - the token address has code
+                // - the returndata is empty
+                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
+            }
+            mstore(0x40, fmp)
+        }
+    }
+}
+
+// src/robinhood/BoundedMorphoV2Adapter.sol
+
+interface IRobinhoodMorphoFeePolicy {
+    function performanceFee() external view returns (uint256);
+    function managementFee() external view returns (uint256);
+}
+
+/// @notice Custody-isolated idle USDG layer. Only the immutable Strategy may
+/// move capital, Morpho shares remain owned by this contract, and redemption
+/// can pay only the Strategy. No admin or keeper withdrawal target exists.
+contract BoundedMorphoV2Adapter is ReentrancyGuard {
+    using SafeERC20 for IERC20;
+
+    uint256 public constant CHAIN_ID = 4663;
+    uint256 public constant RAY = 1e27;
+    uint256 public constant BPS = 10_000;
+    uint16 public constant MAX_SHARE_PRICE_SLIPPAGE_BPS = 25;
+    uint256 public constant MAX_ZERO_PREVIEW_DUST_SHARES = 1e12;
+    uint64 public constant ZERO_PREVIEW_EXIT_DELAY = 24 hours;
+    uint64 public constant ZERO_PREVIEW_EXIT_WINDOW = 6 hours;
+    /// @notice Residual curator-risk ceiling for the external Steakhouse vault.
+    /// Product deployment separately pins the DeepYield deposit cap at 1m USDG,
+    /// so this sleeve can never exceed that product-level bound. This cap limits
+    /// trust exposure; it does not make mutable external fee governance trustless.
+    uint256 public constant MAX_MORPHO_ASSETS = 700_000e6;
+
+    address public constant USDG = 0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168;
+    address public constant MORPHO_VAULT = 0xBeEff033F34C046626B8D0A041844C5d1A5409dd;
+    address public constant MORPHO_BLUE = 0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010;
+    address public constant BUNDLER3 = 0x6478e9393d4C5bB4d53ee881d1DE78786A0344a6;
+    address public constant GENERAL_ADAPTER1 = 0xc5E188541D107e8B79e43478bDE365F1406665D6;
+    address public constant WRAPPED_NATIVE = 0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73;
+
+    IERC20 public constant asset = IERC20(USDG);
+    IRobinhoodMorphoVault public constant morphoVault = IRobinhoodMorphoVault(MORPHO_VAULT);
+    IRobinhoodBundler3 public constant bundler3 = IRobinhoodBundler3(BUNDLER3);
+    IRobinhoodGeneralAdapter1 public constant generalAdapter1 = IRobinhoodGeneralAdapter1(GENERAL_ADAPTER1);
+
+    address public immutable initializer;
+    address public controller;
+    bytes32 public zeroPreviewEmergencyExitId;
+    uint256 public zeroPreviewExitShares;
+    uint64 public zeroPreviewExitReadyAt;
+    uint64 public zeroPreviewExitExpiresAt;
+    uint64 public zeroPreviewExitNonce;
+    /// @notice Shares this adapter itself minted through `park` and has not yet
+    /// burned. Unattributed share donations are custody, not exposure: they
+    /// cannot inflate the capacity reading, trip the quarantine or enlarge the
+    /// write-off snapshot.
+    uint256 public trackedShares;
+
+    error NotController();
+    error WrongChain(uint256 actual);
+    error InvalidController();
+    error AlreadyBound();
+    error InvalidDeployment();
+    error InvalidAmount();
+    error DeadlineExpired(uint256 deadline);
+    error SharePriceLimitTooLoose(uint256 supplied, uint256 maximum);
+    error InsufficientShares(uint256 received, uint256 minimum);
+    error InsufficientAssets(uint256 received, uint256 minimum);
+    error TransferMismatch(uint256 expected, uint256 actual);
+    error ResidualAllowance(address spender, uint256 allowance);
+    error ExternalFeePolicyChanged(uint256 performanceFee, uint256 managementFee);
+    error MorphoExposureExceeded(uint256 requestedAssets, uint256 availableCapacity);
+    error ZeroPreviewExitPending(bytes32 exitId);
+    error ZeroPreviewExitNotPending();
+    error ZeroPreviewExitIdMismatch(bytes32 supplied, bytes32 expected);
+    error ZeroPreviewExitNotReady(uint256 nowTs, uint256 readyAt);
+    error ZeroPreviewExitExpired(uint256 nowTs, uint256 expiresAt);
+    error ZeroPreviewExitRecovered(uint256 previewAssets);
+    error MaterialZeroPreview(uint256 shares);
+
+    event Parked(uint256 assets, uint256 shares);
+    event Redeemed(uint256 shares, uint256 assets, bool emergency);
+    event ZeroPreviewEmergencyExitArmed(bytes32 indexed exitId, uint256 shares, uint64 readyAt, uint64 expiresAt);
+    event ZeroPreviewEmergencyExitCanceled(bytes32 indexed exitId);
+    event ZeroPreviewEmergencyExitExecuted(bytes32 indexed exitId, uint256 shares, uint256 assets);
+
+    modifier onlyController() {
+        if (msg.sender != controller) revert NotController();
+        _;
+    }
+
+    event ControllerBound(address indexed controller);
+
+    constructor(address initializer_) {
+        if (block.chainid != CHAIN_ID) revert WrongChain(block.chainid);
+        if (initializer_ == address(0)) revert InvalidController();
+        if (
+            USDG.code.length == 0 || MORPHO_VAULT.code.length == 0 || BUNDLER3.code.length == 0
+                || GENERAL_ADAPTER1.code.length == 0 || morphoVault.asset() != USDG || morphoVault.decimals() != 18
+                || IERC20Metadata(USDG).decimals() != 6
+                || keccak256(bytes(morphoVault.name())) != keccak256(bytes("Steakhouse USDG"))
+                || keccak256(bytes(morphoVault.symbol())) != keccak256(bytes("steakUSDG"))
+                || IRobinhoodMorphoFeePolicy(MORPHO_VAULT).performanceFee() != 0
+                || IRobinhoodMorphoFeePolicy(MORPHO_VAULT).managementFee() != 0
+                || generalAdapter1.BUNDLER3() != BUNDLER3 || generalAdapter1.MORPHO() != MORPHO_BLUE
+                || generalAdapter1.WRAPPED_NATIVE() != WRAPPED_NATIVE
+        ) revert InvalidDeployment();
+        initializer = initializer_;
+    }
+
+    function bindController(address controller_) external {
+        if (msg.sender != initializer || controller_ == address(0)) revert InvalidController();
+        if (controller != address(0)) revert AlreadyBound();
+        if (IRobinhoodStrategyBinding(controller_).morphoAdapter() != address(this)) revert InvalidController();
+        controller = controller_;
+        emit ControllerBound(controller_);
+    }
+
+    function shareBalance() public view returns (uint256) {
+        return morphoVault.balanceOf(address(this));
+    }
+
+    function previewAssets() public view returns (uint256) {
+        uint256 shares = shareBalance();
+        // External fee governance is an admission risk, not a reason to blind
+        // accounting for capital already exposed. Valuation and every egress
+        // remain live; only new park/deposit paths enforce the zero-fee policy.
+        return shares == 0 ? 0 : morphoVault.previewRedeem(shares);
+    }
+
+    function previewRedeem(uint256 shares) external view returns (uint256) {
+        return shares == 0 ? 0 : morphoVault.previewRedeem(shares);
+    }
+
+    function previewDeposit(uint256 assets) external view returns (uint256) {
+        _requireZeroExternalFees();
+        return morphoVault.previewDeposit(assets);
+    }
+
+    function feePolicyHealthy() external view returns (bool) {
+        return IRobinhoodMorphoFeePolicy(MORPHO_VAULT).performanceFee() == 0
+            && IRobinhoodMorphoFeePolicy(MORPHO_VAULT).managementFee() == 0;
+    }
+
+    /// @notice A material share balance reporting zero assets is quarantined.
+    /// Accounting may still observe the impairment, but no admission, parking
+    /// or Strategy resume may treat the sleeve as empty capacity.
+    function materialZeroPreview() public view returns (bool) {
+        uint256 shares = trackedShares;
+        return shares > MAX_ZERO_PREVIEW_DUST_SHARES && morphoVault.previewRedeem(shares) == 0;
+    }
+
+    function remainingExposureCapacity() public view returns (uint256) {
+        uint256 shares = trackedShares;
+        uint256 current = shares == 0 ? 0 : morphoVault.previewRedeem(shares);
+        if (shares > MAX_ZERO_PREVIEW_DUST_SHARES && current == 0) return 0;
+        return current < MAX_MORPHO_ASSETS ? MAX_MORPHO_ASSETS - current : 0;
+    }
+
+    function maxProtectedSharePrice(uint256 assets, uint16 slippageBps)
+        public
+        view
+        returns (uint256 maxSharePriceE27, uint256 previewShares)
+    {
+        _requireZeroExternalFees();
+        if (assets == 0) revert InvalidAmount();
+        if (slippageBps > MAX_SHARE_PRICE_SLIPPAGE_BPS) {
+            revert SharePriceLimitTooLoose(slippageBps, MAX_SHARE_PRICE_SLIPPAGE_BPS);
+        }
+        previewShares = morphoVault.previewDeposit(assets);
+        if (previewShares == 0) revert InvalidAmount();
+        uint256 numerator = assets * RAY * (BPS + slippageBps);
+        uint256 denominator = previewShares * BPS;
+        maxSharePriceE27 = (numerator + denominator - 1) / denominator;
+    }
+
+    function park(
+        uint256 assets,
+        uint256 maxSharePriceE27,
+        uint256 minShares,
+        uint16 sharePriceSlippageBps,
+        uint256 deadline
+    ) external onlyController nonReentrant returns (uint256 sharesReceived) {
+        bytes32 pendingExitId = zeroPreviewEmergencyExitId;
+        if (pendingExitId != bytes32(0)) revert ZeroPreviewExitPending(pendingExitId);
+        uint256 existingShares = trackedShares;
+        if (existingShares > MAX_ZERO_PREVIEW_DUST_SHARES && morphoVault.previewRedeem(existingShares) == 0) {
+            revert MaterialZeroPreview(existingShares);
+        }
+        _requireZeroExternalFees();
+        if (assets == 0 || minShares == 0) revert InvalidAmount();
+        uint256 capacity = remainingExposureCapacity();
+        if (assets > capacity) revert MorphoExposureExceeded(assets, capacity);
+        if (block.timestamp > deadline) revert DeadlineExpired(deadline);
+        (uint256 maximum, uint256 previewShares) = maxProtectedSharePrice(assets, sharePriceSlippageBps);
+        if (maxSharePriceE27 > maximum) revert SharePriceLimitTooLoose(maxSharePriceE27, maximum);
+        if (minShares > previewShares) revert InsufficientShares(previewShares, minShares);
+
+        uint256 controllerBefore = asset.balanceOf(controller);
+        uint256 idleBefore = asset.balanceOf(address(this));
+        asset.safeTransferFrom(controller, address(this), assets);
+        uint256 received = asset.balanceOf(address(this)) - idleBefore;
+        if (received != assets) revert TransferMismatch(assets, received);
+
+        uint256 sharesBefore = shareBalance();
+        asset.forceApprove(GENERAL_ADAPTER1, assets);
+        IRobinhoodBundler3.Call[] memory calls = new IRobinhoodBundler3.Call[](2);
+        calls[0] = IRobinhoodBundler3.Call({
+            to: GENERAL_ADAPTER1,
+            data: abi.encodeCall(IRobinhoodGeneralAdapter1.erc20TransferFrom, (USDG, GENERAL_ADAPTER1, assets)),
+            value: 0,
+            skipRevert: false,
+            callbackHash: bytes32(0)
+        });
+        calls[1] = IRobinhoodBundler3.Call({
+            to: GENERAL_ADAPTER1,
+            data: abi.encodeCall(
+                IRobinhoodGeneralAdapter1.erc4626Deposit, (MORPHO_VAULT, assets, maxSharePriceE27, address(this))
+            ),
+            value: 0,
+            skipRevert: false,
+            callbackHash: bytes32(0)
+        });
+        bundler3.multicall(calls);
+        asset.forceApprove(GENERAL_ADAPTER1, 0);
+        uint256 allowanceAfter = asset.allowance(address(this), GENERAL_ADAPTER1);
+        if (allowanceAfter != 0) revert ResidualAllowance(GENERAL_ADAPTER1, allowanceAfter);
+
+        sharesReceived = shareBalance() - sharesBefore;
+        if (sharesReceived < minShares) revert InsufficientShares(sharesReceived, minShares);
+        trackedShares += sharesReceived;
+
+        // Bundler should consume all assets. Any execution dust is returned to
+        // the sole allowed recipient rather than becoming adapter inventory.
+        uint256 adapterAfter = asset.balanceOf(address(this));
+        uint256 residual = adapterAfter > idleBefore ? adapterAfter - idleBefore : 0;
+        if (residual != 0) asset.safeTransfer(controller, residual);
+        uint256 spent = controllerBefore - asset.balanceOf(controller);
+        if (spent > assets) revert TransferMismatch(assets, spent);
+        emit Parked(assets, sharesReceived);
+    }
+
+    function redeem(uint256 shares, uint256 minAssetsOut, uint256 deadline, bool emergency)
+        external
+        onlyController
+        nonReentrant
+        returns (uint256 assetsReceived)
+    {
+        bytes32 pendingExitId = zeroPreviewEmergencyExitId;
+        if (pendingExitId != bytes32(0) && morphoVault.previewRedeem(shares) == 0) {
+            revert ZeroPreviewExitPending(pendingExitId);
+        }
+        return _redeem(shares, minAssetsOut, deadline, emergency, false);
+    }
+
+    /// @notice Arms a delayed, full-position write-off path only after Morpho
+    /// itself reports a zero redemption preview. The delay forces a second,
+    /// independent zero observation before a material share balance can burn.
+    function armZeroPreviewEmergencyExit()
+        external
+        onlyController
+        nonReentrant
+        returns (bytes32 exitId, uint256 shares, uint64 readyAt, uint64 expiresAt)
+    {
+        bytes32 pendingExitId = zeroPreviewEmergencyExitId;
+        if (pendingExitId != bytes32(0) && block.timestamp <= zeroPreviewExitExpiresAt) {
+            revert ZeroPreviewExitPending(pendingExitId);
+        }
+
+        shares = trackedShares;
+        if (shares <= MAX_ZERO_PREVIEW_DUST_SHARES) revert InvalidAmount();
+        uint256 preview = morphoVault.previewRedeem(shares);
+        if (preview != 0) revert ZeroPreviewExitRecovered(preview);
+
+        uint64 nonce = zeroPreviewExitNonce + 1;
+        // block.timestamp plus the fixed thirty-hour authorization horizon is
+        // safely within uint64 for the protocol lifetime.
+        // forge-lint: disable-next-line(unsafe-typecast)
+        readyAt = uint64(block.timestamp + ZERO_PREVIEW_EXIT_DELAY);
+        expiresAt = readyAt + ZERO_PREVIEW_EXIT_WINDOW;
+        exitId = keccak256(abi.encode(block.chainid, address(this), controller, nonce, shares, readyAt, expiresAt));
+
+        zeroPreviewExitNonce = nonce;
+        zeroPreviewExitShares = shares;
+        zeroPreviewExitReadyAt = readyAt;
+        zeroPreviewExitExpiresAt = expiresAt;
+        zeroPreviewEmergencyExitId = exitId;
+        emit ZeroPreviewEmergencyExitArmed(exitId, shares, readyAt, expiresAt);
+    }
+
+    /// @notice Executes only the exact share snapshot authorized by the delayed
+    /// zero-preview latch. Later donated shares remain in custody and cannot be
+    /// swept by this authorization.
+    function executeZeroPreviewEmergencyExit(bytes32 exitId)
+        external
+        onlyController
+        nonReentrant
+        returns (uint256 sharesBurned, uint256 assetsReceived)
+    {
+        bytes32 expected = zeroPreviewEmergencyExitId;
+        if (expected == bytes32(0)) revert ZeroPreviewExitNotPending();
+        if (exitId != expected) revert ZeroPreviewExitIdMismatch(exitId, expected);
+        uint256 readyAt = zeroPreviewExitReadyAt;
+        if (block.timestamp < readyAt) revert ZeroPreviewExitNotReady(block.timestamp, readyAt);
+        uint256 expiresAt = zeroPreviewExitExpiresAt;
+        if (block.timestamp > expiresAt) revert ZeroPreviewExitExpired(block.timestamp, expiresAt);
+
+        sharesBurned = zeroPreviewExitShares;
+        if (sharesBurned == 0 || shareBalance() < sharesBurned) revert InvalidAmount();
+        uint256 preview = morphoVault.previewRedeem(sharesBurned);
+        if (preview != 0) revert ZeroPreviewExitRecovered(preview);
+
+        _clearZeroPreviewEmergencyExit();
+        assetsReceived = _redeem(sharesBurned, 0, block.timestamp, true, true);
+        emit ZeroPreviewEmergencyExitExecuted(exitId, sharesBurned, assetsReceived);
+    }
+
+    function cancelZeroPreviewEmergencyExit(bytes32 exitId) external onlyController nonReentrant {
+        bytes32 expected = zeroPreviewEmergencyExitId;
+        if (expected == bytes32(0)) revert ZeroPreviewExitNotPending();
+        if (exitId != expected) revert ZeroPreviewExitIdMismatch(exitId, expected);
+        _clearZeroPreviewEmergencyExit();
+        emit ZeroPreviewEmergencyExitCanceled(exitId);
+    }
+
+    function zeroPreviewEmergencyExitPending() external view returns (bool) {
+        return zeroPreviewEmergencyExitId != bytes32(0);
+    }
+
+    function _redeem(uint256 shares, uint256 minAssetsOut, uint256 deadline, bool emergency, bool zeroPreviewAuthorized)
+        private
+        returns (uint256 assetsReceived)
+    {
+        uint256 sharesBefore = shareBalance();
+        if (shares == 0 || shares > sharesBefore) revert InvalidAmount();
+        if (block.timestamp > deadline) revert DeadlineExpired(deadline);
+        uint256 preview = morphoVault.previewRedeem(shares);
+        // A sub-asset-unit share residual may legitimately preview to zero.
+        // Permit only the exact zero/zero case so the canonical redeem can burn
+        // those shares instead of making every full-unwind path impossible.
+        if (minAssetsOut == 0 && (preview != 0 || (!zeroPreviewAuthorized && shares > MAX_ZERO_PREVIEW_DUST_SHARES))) {
+            revert InvalidAmount();
+        }
+        if (preview < minAssetsOut) revert InsufficientAssets(preview, minAssetsOut);
+
+        uint256 beforeBalance = asset.balanceOf(controller);
+        uint256 reported = morphoVault.redeem(shares, controller, address(this));
+        assetsReceived = asset.balanceOf(controller) - beforeBalance;
+        uint256 sharesAfter = shareBalance();
+        if (sharesAfter > sharesBefore) revert TransferMismatch(shares, 0);
+        if (sharesBefore - sharesAfter != shares) revert TransferMismatch(shares, sharesBefore - sharesAfter);
+        uint256 tracked = trackedShares;
+        trackedShares = shares < tracked ? tracked - shares : 0;
+        if (assetsReceived != reported) revert TransferMismatch(reported, assetsReceived);
+        if (assetsReceived < minAssetsOut) revert InsufficientAssets(assetsReceived, minAssetsOut);
+        if (!zeroPreviewAuthorized && zeroPreviewEmergencyExitId != bytes32(0)) {
+            _clearZeroPreviewEmergencyExit();
+        }
+        emit Redeemed(shares, assetsReceived, emergency);
+    }
+
+    function _clearZeroPreviewEmergencyExit() private {
+        zeroPreviewEmergencyExitId = bytes32(0);
+        zeroPreviewExitShares = 0;
+        zeroPreviewExitReadyAt = 0;
+        zeroPreviewExitExpiresAt = 0;
+    }
+
+    function _requireZeroExternalFees() private view {
+        uint256 performance = IRobinhoodMorphoFeePolicy(MORPHO_VAULT).performanceFee();
+        uint256 management = IRobinhoodMorphoFeePolicy(MORPHO_VAULT).managementFee();
+        if (performance != 0 || management != 0) revert ExternalFeePolicyChanged(performance, management);
+    }
+}
+
