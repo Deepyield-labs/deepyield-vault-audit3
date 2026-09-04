@@ -1,0 +1,18 @@
+{
+ "package": "robinhood-combined-037340b7",
+ "date": "2026-09-04",
+ "sourceCommit": "1bf03aaf9d87b9ad367b4539093342800d96be67",
+ "commitment": "037340b76710974ad5e303b8943d8cbd012c7106918e16fdb07170423e1a64e8",
+ "files": {
+  "flat/RobinhoodCombined.reaudit.flat.sol": {
+   "sha256": "dde3dbcc62d97ed3c214a64d5e9b87f64e83aa09c7009a2b0f7d0d584623a4ff",
+   "bytes": 595476,
+   "lines": 13706
+  }
+ },
+ "equivalence": "PASS (11 units)",
+ "testMatrix": {
+  "passed": 832,
+  "failed": 0
+ }
+}
