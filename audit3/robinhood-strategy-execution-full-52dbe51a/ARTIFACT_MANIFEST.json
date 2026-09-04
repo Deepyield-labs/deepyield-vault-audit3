@@ -1,0 +1,36 @@
+{
+ "package": "robinhood-strategy-execution-full-52dbe51a",
+ "date": "2026-09-04",
+ "sourceCommit": "e102b441768d21d16c65e8ba473770e4454c68d5",
+ "commitment": "52dbe51aef73150358fb9a2eb09300a564056afe7c72e8999e92bb548ffd3bc1",
+ "compiler": {
+  "version": "0.8.24+commit.e11b9ed9",
+  "optimizer": true,
+  "optimizerRuns": 200,
+  "viaIR": true,
+  "evmVersion": "cancun"
+ },
+ "files": {
+  "flat/RobinhoodStrategyExecution.reaudit.flat.sol": {
+   "sha256": "43037a26e2f44ca77fd775de4041e01b5a31a7971aa3a228ff41ad5a63005824",
+   "bytes": 398443,
+   "lines": 9561,
+   "units": [
+    "RobinhoodTreasuryStrategy",
+    "RobinhoodStrategyLib",
+    "RobinhoodSettlementLib",
+    "FixedFeeSink",
+    "BoundedUniswapV3Venue",
+    "RobinhoodVenueLib",
+    "RobinhoodPriceGuard",
+    "BoundedMorphoV2Adapter"
+   ]
+  }
+ },
+ "equivalence": {
+  "abi": "PASS (8 units)",
+  "deployedRuntimeWithoutMetadataAndWithLinkPlaceholdersNormalized": "PASS (8 units)",
+  "standaloneCompilation": "PASS"
+ },
+ "relatedPackage": "robinhood-five-scope-reaudit-119013d1"
+}
