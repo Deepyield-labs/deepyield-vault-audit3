@@ -1,0 +1,19 @@
+{
+ "package": "robinhood-audit4-libraries-dbe1e2cb",
+ "date": "2026-09-04",
+ "sourceCommit": "a12332600ab84982f2406b3c61bb6f7c4ac01203",
+ "commitment": "dbe1e2cbeafc486cb4d0fba91348dfbdb6d8a71b47bd2af8f0ee8bf1f7327b3a",
+ "files": {
+  "flat/RobinhoodStrategyLibraries.reaudit.flat.sol": {
+   "sha256": "80dd07dd3b99032972a33ce1d0ed60bc992ebd845b77dfc972fb4bde43662c9c",
+   "bytes": 261264,
+   "lines": 6507,
+   "units": [
+    "RobinhoodStrategyLib",
+    "RobinhoodSettlementLib",
+    "FixedFeeSink"
+   ]
+  }
+ },
+ "equivalence": "PASS"
+}
