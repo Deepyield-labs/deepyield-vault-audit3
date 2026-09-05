@@ -1,0 +1,102 @@
+{
+ "package": "robinhood-audit10-composite-91b53af6",
+ "date": "2026-09-05",
+ "chainId": 4663,
+ "sourceCommit": "158c7f10d3f1fc82689b8d57e9033157d931b8ed",
+ "commitment": "91b53af6c6c58af0c889aa8809642945847b69db5a9ef1a565f9ffd98dc48585",
+ "supersedes": [
+  "robinhood-audit9-composite-3692e4a8"
+ ],
+ "compiler": {
+  "version": "0.8.24+commit.e11b9ed9",
+  "optimizer": true,
+  "optimizerRuns": 200,
+  "viaIR": true,
+  "evmVersion": "cancun"
+ },
+ "files": {
+  "flat/RobinhoodCombined.reaudit.flat.sol": {
+   "sha256": "20503119b25590f45fc218097f2ecbff160cd54acc0ea9cb3ad0e0b42fe26793",
+   "bytes": 625051,
+   "lines": 14203
+  },
+  "flat/RobinhoodMorphoAdapter.reaudit.flat.sol": {
+   "sha256": "7ecde86f2913c0561a16ebfd61a0caefcde90e2256b5d702dc802f26bbda68f9",
+   "bytes": 130019,
+   "lines": 3378
+  },
+  "flat/RobinhoodStrategyCore.reaudit.flat.sol": {
+   "sha256": "f9d3ce51f228e2fa3d719b3415fdaa3e6384e4ce922bed44e9d03a0dd13aa2fa",
+   "bytes": 312627,
+   "lines": 7565
+  },
+  "flat/RobinhoodStrategyLibraries.reaudit.flat.sol": {
+   "sha256": "ad67c62de751461246d6d137f77262d35d2cc0ac4a3e1990f72fdaf89cecfa26",
+   "bytes": 270121,
+   "lines": 6648
+  },
+  "flat/RobinhoodVaultRedemption.reaudit.flat.sol": {
+   "sha256": "54d8575fc9f3492a57efb7afe260606b98a7201812d0c2e39df6c2d3b87090cc",
+   "bytes": 349860,
+   "lines": 8116
+  },
+  "flat/RobinhoodVenueOracle.reaudit.flat.sol": {
+   "sha256": "c45dc5069e492f48ecc395d8c6e09d30d57f2c5d1051b0d429f25d7b5f2698d0",
+   "bytes": 143985,
+   "lines": 3287
+  }
+ },
+ "runtimeSizes": {
+  "RobinhoodTreasuryVault": {
+   "runtimeBytes": 22562,
+   "marginBytes": 2014
+  },
+  "RobinhoodTreasuryStrategy": {
+   "runtimeBytes": 21946,
+   "marginBytes": 2630
+  },
+  "BoundedUniswapV3Venue": {
+   "runtimeBytes": 22079,
+   "marginBytes": 2497
+  },
+  "RobinhoodPriceGuard": {
+   "runtimeBytes": 11574,
+   "marginBytes": 13002
+  },
+  "BoundedMorphoV2Adapter": {
+   "runtimeBytes": 10381,
+   "marginBytes": 14195
+  },
+  "FixedFeeSink": {
+   "runtimeBytes": 6362,
+   "marginBytes": 18214
+  },
+  "VaultBDepositLib": {
+   "runtimeBytes": 21467,
+   "marginBytes": 3109
+  },
+  "VaultBRedemptionLib": {
+   "runtimeBytes": 18421,
+   "marginBytes": 6155
+  },
+  "RobinhoodStrategyLib": {
+   "runtimeBytes": 22544,
+   "marginBytes": 2032
+  },
+  "RobinhoodSettlementLib": {
+   "runtimeBytes": 17314,
+   "marginBytes": 7262
+  },
+  "RobinhoodVenueLib": {
+   "runtimeBytes": 21178,
+   "marginBytes": 3398
+  }
+ },
+ "equivalence": "PASS (all units, 6 flats)",
+ "storage": "append-only vs 5a13bf7",
+ "testMatrix": {
+  "suites": 14,
+  "passed": 853,
+  "failed": 0
+ }
+}
