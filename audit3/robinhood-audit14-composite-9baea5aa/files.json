@@ -1,0 +1,75 @@
+{
+ "flat/RobinhoodVaultRedemption.reaudit.flat.sol": {
+  "sha256": "275e2b2367de8259ef1f857088fc3dca7b4f76c02fbc5acc770238d380b7559a",
+  "bytes": 356735,
+  "lines": 8217,
+  "scope": "vault",
+  "units": [
+   "RobinhoodTreasuryVault",
+   "VaultBDepositLib",
+   "VaultBRedemptionLib"
+  ]
+ },
+ "flat/RobinhoodStrategyCore.reaudit.flat.sol": {
+  "sha256": "04fa5a6596bc84ce9cbff6009d84260cbf7d1c1268e3359236e5376390add175",
+  "bytes": 316209,
+  "lines": 7599,
+  "scope": "strategy",
+  "units": [
+   "RobinhoodTreasuryStrategy",
+   "RobinhoodStrategyLib",
+   "RobinhoodSettlementLib",
+   "FixedFeeSink"
+  ]
+ },
+ "flat/RobinhoodVenueOracle.reaudit.flat.sol": {
+  "sha256": "c45dc5069e492f48ecc395d8c6e09d30d57f2c5d1051b0d429f25d7b5f2698d0",
+  "bytes": 143985,
+  "lines": 3287,
+  "scope": "venue",
+  "units": [
+   "BoundedUniswapV3Venue",
+   "RobinhoodVenueLib",
+   "RobinhoodPriceGuard"
+  ]
+ },
+ "flat/RobinhoodMorphoAdapter.reaudit.flat.sol": {
+  "sha256": "82660255127b362113cd2472c9910cbc1ef2f56661937194d5560f18d4861052",
+  "bytes": 137488,
+  "lines": 3490,
+  "scope": "morpho",
+  "units": [
+   "BoundedMorphoV2Adapter"
+  ]
+ },
+ "flat/RobinhoodStrategyLibraries.reaudit.flat.sol": {
+  "sha256": "620029c247344676540d0b78dd2e30ad5b6609feeae5aa923c9fb57484277693",
+  "bytes": 273552,
+  "lines": 6680,
+  "scope": "libraries",
+  "units": [
+   "RobinhoodStrategyLib",
+   "RobinhoodSettlementLib",
+   "FixedFeeSink"
+  ]
+ },
+ "flat/RobinhoodCombined.reaudit.flat.sol": {
+  "sha256": "7d23719322f7eb253facdc5503f6247630a07d8638cdd178562b4d9333990af2",
+  "bytes": 642848,
+  "lines": 14448,
+  "scope": "combined",
+  "units": [
+   "RobinhoodTreasuryVault",
+   "VaultBDepositLib",
+   "VaultBRedemptionLib",
+   "RobinhoodTreasuryStrategy",
+   "RobinhoodStrategyLib",
+   "RobinhoodSettlementLib",
+   "FixedFeeSink",
+   "BoundedUniswapV3Venue",
+   "RobinhoodVenueLib",
+   "RobinhoodPriceGuard",
+   "BoundedMorphoV2Adapter"
+  ]
+ }
+}
