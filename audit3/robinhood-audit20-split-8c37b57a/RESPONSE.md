@@ -735,3 +735,53 @@ the design excludes. The report's fee-on-transfer sub-case is moot: USDG exposes
 fee (probed on-chain).
 
 The remaining Medium and Low items are documented tradeoffs; none affects access to funds.
+
+---
+
+# Rounds 20–21 — VaultLibraries (job 835) and Vault (job 841): no code change
+
+Both jobs audited a single flat of a two-flat system. Every High and the one Critical rests on
+a guard, reset or gate that lives in the companion flat — the Vault for the libraries job, the
+libraries for the Vault job. Each is traced to the exact line below; none required a code change.
+
+## VaultLibraries, job 835 — 1 Critical · 6 High (all rebutted)
+
+- **F-1 (Critical) — settlement priced off live uncapped NAV at an attacker-chosen block.**
+  All four ERC-4626 entrypoints (`deposit`/`mint`/`withdraw`/`redeem`, `DeepYieldVaultB` lines
+  692/709/726/742) revert `RedeemQueueActive` while a cycle is committed. Supply is frozen and
+  no inflow is possible between commit and settlement, so the "deposit inflates NAV against a
+  frozen supply snapshot" mechanism cannot occur.
+- **F-2 — force-settled cancellation pays assets and returns shares.** The supply==0
+  force-cancel path leaves `result.assets` at its computed value, but the consumer
+  (`claimRedeem`, lines 1000-1006) only returns shares; assets are paid by `finalizeRedeemClaim`
+  and on a value-neutral timeout `_cancelTimedOutCycle` has already set the payout pot to zero.
+  No double payout.
+- **F-3 — sealed threshold never read.** Its reader is `RobinhoodTreasuryVault`'s
+  `commitThresholdShares` override, added in the round-16 package; job 835 audited the round-15
+  package, before it.
+- **F-5 — `initializeRedeemCycleSettlement` has no already-initialized guard.**
+  `settleWithdrawalCycle` reverts `CycleAlreadyCommitted` on `cycleLiquidityPrepared`, so the
+  quote cannot be taken twice.
+- **F-10 — instant exits drain the unclaimed payout.** `_spendableIdle` subtracts
+  `totalClaimableAssets`, so escrowed payouts are reserved and not spendable by instant exits.
+- **F-14 — unresponsive source locks cancellation forever.** The timeout path
+  (`forceSettleStuckCycle` → `_cancelTimedOutCycle`) and emergency strategy migration both
+  resolve a dead source; not a permanent lock.
+
+## Vault, job 841 — 3 High + 2 Medium reported as High (all rebutted)
+
+- **1 — `_clearRedeemCycle` is unreachable dead code.** It is called from
+  `VaultBRedemptionLib` at the two `outstandingRedeemCount == 0` sites (lines 543, 643); the
+  cycle resets when the last request clears, not via the Vault entrypoint.
+- **2 — `_cancelTimedOutCycle` never zeros `redeemCycleProtocolCredit`, bricking setTreasury.**
+  `_clearRedeemCycle` (VaultBRedemptionLib line 668) zeros it when the force-settled cohort
+  finishes claiming, which unblocks `setTreasury`/`applyTreasury`.
+- **3 — `commitRedeemCycle` lacks an idempotency guard.** `inspectRedeemCycleCommit`
+  (VaultBDepositLib) reverts `RedeemCycleLocked` on `locallyCommitted` before any snapshot is
+  written, so a re-commit cannot overwrite the frozen NAV/supply.
+- **4 — `totalAssets` can revert (EIP-4626).** Deliberate and pinned by
+  `test_MaxViewsFailSafeButTotalAssetsReverts`: nothing may be priced off a broken graph, while
+  `maxWithdraw`/`maxRedeem` fail safe.
+- **5 — `commitThresholdShares` tracks live supply pre-seal.** Required: before the seal the
+  bar must follow supply (the C1 determination); after the seal it is frozen
+  (`redeemCycleSealThreshold`).

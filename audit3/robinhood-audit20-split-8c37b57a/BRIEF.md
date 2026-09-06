@@ -111,7 +111,16 @@ please engage with the trace rather than the pattern.
    again when it exceeds `expected`. A protocol-side floor was added in an earlier round and
    reverted precisely because it collided with that check.
 
-15. **PUSH0/TSTORE/MCOPY execute on chain 4663** — verified by `eth_call` against the live
+15. **A finding against one flat of a two-flat system needs the companion flat.** The Vault
+   and its libraries are split across `RobinhoodVaultRedemption`/`RobinhoodVaultLibraries`, and
+   the Strategy across `RobinhoodStrategyCore`/`RobinhoodStrategyLibraries`. Guards, cycle
+   resets and idempotency checks frequently live on the other side of that split: the cycle
+   state reset (`_clearRedeemCycle`), the protocol-credit zeroing, and the commit idempotency
+   guard are all in the libraries, while the sealed-threshold reader is the product Vault's
+   override. Before reporting "X is never reset / never checked / is dead code", confirm it
+   against the companion flat, not this one alone.
+
+16. **PUSH0/TSTORE/MCOPY execute on chain 4663** — verified by `eth_call` against the live
    RPC, not assumed.
 
 ## How these files are assembled
