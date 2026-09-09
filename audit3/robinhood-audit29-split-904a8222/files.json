@@ -1,0 +1,81 @@
+{
+  "flat/RobinhoodVaultRedemption.reaudit.flat.sol": {
+    "sha256": "8fb75767014c101e273d440db78d03e171ac1ad67e8bc5e7d10ed307bc7aed3e",
+    "bytes": 268725,
+    "lines": 6504,
+    "scope": "vault",
+    "units": [
+      "RobinhoodTreasuryVault"
+    ]
+  },
+  "flat/RobinhoodVaultLibraries.reaudit.flat.sol": {
+    "sha256": "5f5a79c566f75fbdfe4756cb1667e70461e637d64425e92b2cf0782ee775d229",
+    "bytes": 227922,
+    "lines": 5024,
+    "scope": "vaultlibs",
+    "units": [
+      "VaultBDepositLib",
+      "VaultBRedemptionLib"
+    ]
+  },
+  "flat/RobinhoodStrategyCore.reaudit.flat.sol": {
+    "sha256": "9b2d1b3d02af3fef54d46e60508a6cdbef6c6664270bc93c2f6e66f2a9aa6b1f",
+    "bytes": 229197,
+    "lines": 5657,
+    "scope": "strategy",
+    "units": [
+      "RobinhoodTreasuryStrategy",
+      "FixedFeeSink"
+    ]
+  },
+  "flat/RobinhoodVenueOracle.reaudit.flat.sol": {
+    "sha256": "e738a5dfcdb361ec0b4a6716778c8c138cd549eb47bc165e7eceec6bd89a0a3b",
+    "bytes": 144791,
+    "lines": 3296,
+    "scope": "venue",
+    "units": [
+      "BoundedUniswapV3Venue",
+      "RobinhoodVenueLib",
+      "RobinhoodPriceGuard"
+    ]
+  },
+  "flat/RobinhoodMorphoAdapter.reaudit.flat.sol": {
+    "sha256": "71478e1d98b7effccf445c650c62207c8e922aa161b9ce8ddd31db15baaa871a",
+    "bytes": 139449,
+    "lines": 3520,
+    "scope": "morpho",
+    "units": [
+      "BoundedMorphoV2Adapter"
+    ]
+  },
+  "flat/RobinhoodStrategyLibraries.reaudit.flat.sol": {
+    "sha256": "9179307b615dbb9e8f24841b18c7ada55575d2c62911af02eb36dd2db2048358",
+    "bytes": 297445,
+    "lines": 7146,
+    "scope": "libraries",
+    "units": [
+      "RobinhoodStrategyLib",
+      "RobinhoodSettlementLib",
+      "FixedFeeSink"
+    ]
+  },
+  "flat/RobinhoodCombined.reaudit.flat.sol": {
+    "sha256": "9b13f373f1516a704d2564e882e18fa0b6afd75daf68e0eb3632f634cb176f4b",
+    "bytes": 666795,
+    "lines": 14837,
+    "scope": "combined",
+    "units": [
+      "RobinhoodTreasuryVault",
+      "VaultBDepositLib",
+      "VaultBRedemptionLib",
+      "RobinhoodTreasuryStrategy",
+      "RobinhoodStrategyLib",
+      "RobinhoodSettlementLib",
+      "FixedFeeSink",
+      "BoundedUniswapV3Venue",
+      "RobinhoodVenueLib",
+      "RobinhoodPriceGuard",
+      "BoundedMorphoV2Adapter"
+    ]
+  }
+}

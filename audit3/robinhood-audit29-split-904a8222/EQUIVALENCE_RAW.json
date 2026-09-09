@@ -1,0 +1,236 @@
+{
+  "source": "0abc8d0e7ee1ace83df14661560f040463edacdd",
+  "compiler": "solc 0.8.24 / Cancun / optimizer 200 / via-IR",
+  "results": [
+    {
+      "scope": "vault",
+      "unit": "RobinhoodTreasuryVault",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22490,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "vaultlibs",
+      "unit": "VaultBDepositLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 21983,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "vaultlibs",
+      "unit": "VaultBRedemptionLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 19689,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "strategy",
+      "unit": "RobinhoodTreasuryStrategy",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22334,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "strategy",
+      "unit": "FixedFeeSink",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 6309,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "venue",
+      "unit": "BoundedUniswapV3Venue",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22026,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "venue",
+      "unit": "RobinhoodVenueLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 21150,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "venue",
+      "unit": "RobinhoodPriceGuard",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 11521,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "morpho",
+      "unit": "BoundedMorphoV2Adapter",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 10970,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "libraries",
+      "unit": "RobinhoodStrategyLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22429,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "libraries",
+      "unit": "RobinhoodSettlementLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 20175,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "libraries",
+      "unit": "FixedFeeSink",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 6309,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodTreasuryVault",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22490,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "VaultBDepositLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 21983,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "VaultBRedemptionLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 19689,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodTreasuryStrategy",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22334,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodStrategyLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22429,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodSettlementLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 20175,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "FixedFeeSink",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 6309,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "BoundedUniswapV3Venue",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 22026,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodVenueLib",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 21150,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "RobinhoodPriceGuard",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 11521,
+      "structural_storage_layout": true
+    },
+    {
+      "scope": "combined",
+      "unit": "BoundedMorphoV2Adapter",
+      "abi": true,
+      "metadata_stripped_runtime": true,
+      "creation_link_references": true,
+      "runtime_link_references": true,
+      "runtime_bytes_without_metadata": 10970,
+      "structural_storage_layout": true
+    }
+  ]
+}
