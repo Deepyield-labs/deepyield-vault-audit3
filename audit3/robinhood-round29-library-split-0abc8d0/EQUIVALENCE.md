@@ -12,4 +12,5 @@ via-IR enabled.
 
 Runtime comparison strips only Solidity CBOR metadata and normalizes linked
 library placeholders on both sides. Executable runtime is otherwise compared
-byte-for-byte.
+byte-for-byte. The trailing paired-scope context is inside a block comment and
+the standalone compiler confirms it changes neither ABI nor runtime.

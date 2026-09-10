@@ -4765,3 +4765,248 @@ library RobinhoodStrategyLib {
         feeAssets = profit * feeBps / BPS;
     }
 }
+
+/*
+===============================================================================
+ROUND 29 PAIRED-SCOPE REACHABILITY CONTEXT
+Audience: Linked Strategy libraries audit
+
+Executable production lines from the companion functions are quoted below.
+Source-only `//` comments are omitted to fit the submission limit; no
+executable statement is omitted or changed. Each header hashes the complete
+source function. The excerpt resolves reachability, not paid scope.
+
+--- src/DeepYieldVaultB.sol :: _activateStrategy :: sha256 c320972ac2bbec058ca5c867ad0166e1ac9bd37b58d7fe8a48630c2c71248e4c ---
+function _activateStrategy(
+        address newStrategy,
+        address expectedSource,
+        bool emergencyAllowed,
+        bool sourceWriteOffAllowed
+    ) internal {
+        if (newStrategy == address(0)) revert ZeroAddress();
+        if (outstandingRedeemShares != 0 || _deferredRedeemHandleCount != 0) {
+            revert RedeemQueueActive(outstandingRedeemShares);
+        }
+        address oldStrategy = address(strategy);
+        IVaultBAsyncStrategy candidate = IVaultBAsyncStrategy(newStrategy);
+        address source = VaultBDepositLib.activateCandidate(
+            candidate, expectedSource, _requiredStrategyVersion(), emergencyAllowed, sourceWriteOffAllowed
+        );
+        strategy = candidate;
+        strategyAssetSource = source;
+        emit StrategyUpdated(oldStrategy, newStrategy);
+    }
+
+--- src/libraries/VaultBDepositLib.sol :: activateCandidate :: sha256 e2523b6c0d08a6e409fec38ea949a0bfca99de018a7cd42e761fac607690f0f7 ---
+function activateCandidate(
+        IVaultBAsyncStrategy candidate,
+        address expectedSource,
+        bytes32 requiredStrategyVersion,
+        bool emergencyAllowed,
+        bool sourceWriteOffAllowed
+    ) external returns (address source) {
+        IVaultBRedeemState vault = IVaultBRedeemState(address(this));
+        IERC20 asset = IERC20(vault.asset());
+        IVaultBAsyncStrategy oldStrategy = IVaultBAsyncStrategy(vault.strategy());
+        address oldAssetSource = vault.strategyAssetSource();
+        _validateStrategyVersion(candidate, requiredStrategyVersion);
+        if (emergencyAllowed && !sourceWriteOffAllowed) revert StrategyNotEmpty();
+        if (address(oldStrategy) != address(0)) {
+            _requireGas(MIGRATION_CALL_GAS + MIGRATION_VIEW_GAS + MIGRATION_RECOVERY_GAS);
+            (bool prepared, bool attested) =
+                _callBool(address(oldStrategy), PREPARE_MIGRATION_SELECTOR, MIGRATION_CALL_GAS);
+            attested = prepared && attested;
+            (bool responsive, uint256 assets) =
+                _staticUint(address(oldStrategy), ESTIMATED_TOTAL_ASSETS_SELECTOR, MIGRATION_VIEW_GAS);
+            uint256 directBacking = asset.balanceOf(oldAssetSource);
+            if (directBacking != 0) {
+                if (attested || !emergencyAllowed || !sourceWriteOffAllowed) revert StrategyNotEmpty();
+                emit EmergencyStrategyBackingWrittenOff(oldAssetSource, directBacking);
+            }
+            if (responsive && assets != 0) {
+                if (!emergencyAllowed || !sourceWriteOffAllowed) revert StrategyNotEmpty();
+                emit EmergencyStrategyBackingWrittenOff(address(oldStrategy), assets);
+            }
+            if (!attested && !responsive && (!emergencyAllowed || !sourceWriteOffAllowed)) {
+                revert StrategyNotEmpty();
+            }
+            _tryApprove(asset, address(oldStrategy), 0);
+        }
+
+        source = _validateCandidate(candidate, address(asset), address(this));
+        if (expectedSource != address(0) && source != expectedSource) revert StrategyWiringMismatch();
+        asset.forceApprove(address(candidate), emergencyAllowed ? 0 : type(uint256).max);
+    }
+
+--- src/robinhood/RobinhoodTreasuryStrategy.sol :: deploy :: sha256 a4ad1f497b007b6f51347da6f812dd9e0342b68dbf709db8430dd77fba9fa8c6 ---
+function deploy(uint256 assets) external onlyRole(KEEPER_ROLE) nonReentrant {
+        RobinhoodSettlementLib.deploy(_accountingStorage(), _redemptionStorage(), assets);
+    }
+
+--- src/robinhood/RobinhoodTreasuryStrategy.sol :: closeLp :: sha256 f0ddaea436b9ec3d40c0b5799ad4fde16c06323f65efdf462ce1d3a52cdfb535 ---
+function closeLp(BoundedUniswapV3Venue.CloseParams calldata p)
+        external
+        nonReentrant
+        returns (uint256 assetsRecovered)
+    {
+        bool guardian = hasRole(GUARDIAN_ROLE, msg.sender);
+        if (!hasRole(KEEPER_ROLE, msg.sender) && !guardian) {
+            _checkRole(KEEPER_ROLE, msg.sender);
+        }
+        if (p.emergency && !guardian) _checkRole(GUARDIAN_ROLE, msg.sender);
+        RobinhoodMarket market = activeMarket;
+        (bool exiting, bool halted) = RobinhoodStrategyLib.validateClosePreflight(
+            address(venue), market, activeTokenId, uint8(state), _exitReturnsToHalted, p.emergency, normalCloseFailedAt
+        );
+        bytes32 jobId = activeJobId;
+        RobinhoodStrategyLib.CloseResult memory closeResult = RobinhoodStrategyLib.closeVenue(
+            asset, address(morphoAdapter), address(venue), unremittedFee, accountedAssets, performanceFeeBps(), p
+        );
+        assetsRecovered = closeResult.assetsRecovered;
+        if (closeResult.recoverableFailure) {
+            RobinhoodSettlementLib.recordNormalCloseFailure(_redemptionStorage(), closeResult.failureSelector);
+            return 0;
+        }
+        if (!exiting) {
+            _exitReturnsToHalted = halted || p.emergency;
+            state = StrategyState.EXITING;
+        } else if (p.emergency) {
+            _exitReturnsToHalted = true;
+        }
+        if (!closeResult.terminal) {
+            if (!p.emergency) normalCloseFailedAt = 0;
+            RobinhoodSettlementLib.recordCloseLoss(
+                _redemptionStorage(), closeResult.executionLoss, closeResult.chargeableLoss
+            );
+            return assetsRecovered;
+        }
+
+        if (liveWithdrawalCount != 0 && !cycleCommitted) {
+            (bool committed, uint256 grossBefore) = RobinhoodStrategyLib.commitVaultSnapshot(
+                vault,
+                address(morphoAdapter),
+                closeResult.localGrossBefore,
+                unremittedFee,
+                accountedAssets,
+                performanceFeeBps(),
+                closeResult.snapshotValueAvailable
+            );
+            if (committed) {
+                RobinhoodSettlementLib.commitCycle(_redemptionStorage(), grossBefore, unremittedFee, accountedAssets);
+            }
+        }
+        RobinhoodSettlementLib.recordCloseLoss(
+            _redemptionStorage(), closeResult.executionLoss, closeResult.chargeableLoss
+        );
+        bool returnToHalted = _exitReturnsToHalted;
+        _exitReturnsToHalted = false;
+        normalCloseFailedAt = 0;
+        activeJobId = bytes32(0);
+        activeMarket = RobinhoodMarket.NONE;
+        activeTokenId = 0;
+        state = returnToHalted ? StrategyState.HALTED : StrategyState.MORPHO_IDLE;
+
+        emit JobClosed(market, jobId, assetsRecovered, cycleExecutionLoss, p.emergency);
+    }
+
+--- src/robinhood/BoundedUniswapV3Venue.sol :: close :: sha256 738d35d7f89ea0b9ed91c6d005e0b079d76fd2b523eb717d632ffad88bd7c48f ---
+function close(CloseParams calldata p) external onlyController nonReentrant returns (uint256 assetsReturned) {
+        uint256 tokenId = activeTokenId;
+        RobinhoodMarket market = activeMarket;
+        uint256 referenceTotal;
+        uint256 referenceRiskPrice;
+        if (tokenId == 0 || market == RobinhoodMarket.NONE) revert NoActivePosition();
+        if (block.timestamp > p.validUntil) revert DeadlineExpired(p.validUntil);
+        IRobinhoodV3Pool selectedPool = guard.marketPool(market);
+        IERC20 risk = IERC20(guard.riskToken(market));
+        (uint160 spotSqrt, int24 spotTick,,,,,) = selectedPool.slot0();
+        RobinhoodPriceGuard.Prices memory prices =
+            p.emergency ? guard.emergencyExitPrices(market) : guard.exitPrices(market);
+        if (p.emergency) {
+            referenceRiskPrice = 0;
+        } else {
+            referenceRiskPrice = RobinhoodVenueLib.closeRiskPrice(prices.spotUsdGPerRisk, prices.twapUsdGPerRisk, false);
+        }
+        uint160 referenceSqrt = TickMath.getSqrtRatioAtTick(prices.twapTick);
+        bool riskToken0 = guard.riskIsToken0(market);
+        uint16 slippage = p.emergency ? guard.maxEmergencySlippageBps() : guard.maxNormalSlippageBps();
+        RobinhoodVenueLib.PositionData memory position;
+        if (activePositionBurned) {
+            if (p.amount0Min != 0 || p.amount1Min != 0) revert InvalidAmount();
+            referenceTotal =
+                activeUsdGInventory + FullMath.mulDiv(activeRiskInventory, referenceRiskPrice, ONE_RISK_TOKEN);
+        } else {
+            (position, referenceTotal) = RobinhoodVenueLib.closeReference(
+                positionManager,
+                selectedPool,
+                guard.poolFee(market),
+                tokenId,
+                referenceSqrt,
+                p.emergency ? referenceSqrt : spotSqrt,
+                referenceRiskPrice,
+                riskToken0,
+                activeRiskInventory,
+                activeUsdGInventory
+            );
+        }
+        if (p.emergency) {
+            referenceTotal = 0;
+        }
+        uint256 totalFloor = RobinhoodVenueLib.totalCloseFloor(referenceTotal, 0, slippage, p.emergency);
+        uint160 priceLimit =
+            RobinhoodVenueLib.priceLimit(riskToken0, true, spotTick, prices.twapTick, maxSwapTickMovement, p.emergency);
+
+        uint256 riskRemaining;
+        (assetsReturned, riskRemaining) = RobinhoodVenueLib.executeClose(
+            positionManager,
+            router,
+            risk,
+            usdg,
+            RobinhoodVenueLib.CloseExecution({
+                tokenId: tokenId,
+                liquidity: position.liquidity,
+                amount0Min: p.amount0Min,
+                amount1Min: p.amount1Min,
+                deadline: p.validUntil,
+                trackedRisk: activeRiskInventory,
+                trackedStable: activeUsdGInventory,
+                suppliedRouterFloor: p.minUsdGOut,
+                priceLimit: priceLimit,
+                referenceRiskPrice: referenceRiskPrice,
+                poolFee: guard.poolFee(market),
+                slippage: slippage
+            })
+        );
+        uint256 observedValue = assetsReturned + FullMath.mulDiv(riskRemaining, referenceRiskPrice, ONE_RISK_TOKEN);
+        if (observedValue < totalFloor) revert CloseExecutionInfeasible(observedValue, totalFloor);
+        if (assetsReturned < p.minTotalAssetsOut) {
+            revert CloseExecutionInfeasible(assetsReturned, p.minTotalAssetsOut);
+        }
+        _recordExecutionLoss(referenceTotal, observedValue, false);
+        bytes32 jobId = activeJobId;
+        if (assetsReturned != 0) usdg.safeTransfer(controller, assetsReturned);
+        if (riskRemaining != 0) {
+            if (
+                referenceRiskPrice == 0
+                    || RobinhoodVenueLib.residualHasRecoverableValue(riskRemaining, referenceRiskPrice, slippage)
+            ) {
+                activeRiskInventory = riskRemaining;
+                activeUsdGInventory = 0;
+                activePositionBurned = true;
+                emit PositionCloseProgress(market, jobId, tokenId, assetsReturned, riskRemaining, p.emergency);
+                return assetsReturned;
+            }
+            retainedRiskDust[market] += riskRemaining;
+        }
+        activeTokenId = 0;
+        activeJobId = bytes32(0);
+        activeMarket = RobinhoodMarket.NONE;
+        activeRiskInventory = 0;
+        activeUsdGInventory = 0;
+        activePositionBurned = false;
+        emit PositionClosed(market, jobId, tokenId, assetsReturned, p.emergency);
+    }
+
+END OF PAIRED-SCOPE CONTEXT
+===============================================================================
+*/

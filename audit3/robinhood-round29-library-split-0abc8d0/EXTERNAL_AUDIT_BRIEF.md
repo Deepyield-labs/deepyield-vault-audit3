@@ -18,6 +18,10 @@ Each paid review must audit only its named library. Dependency projections and
 reverting linked-library stubs are compile-time audit context. They do not
 replace the separately linked production implementation.
 
+Each file ends with compile-inert, hash-labelled excerpts of the exact paired
+Vault, Strategy and Venue call sites needed to adjudicate canonical
+reachability without expanding the paid scope.
+
 Report every Critical, High and Medium issue with exact locations,
 preconditions, a complete failure or exploit path, severity rationale and the
 minimal remediation. Distinguish a reachable defect in this exact canonical
